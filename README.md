@@ -14,3 +14,16 @@ For this project, DOTA-v2.0 had been used and few modifications were made before
 pip install ultralytics
 ```
 Alternative installation step and more detailed information about the installation can be found here [YOLOv8](https://github.com/ultralytics/ultralytics)
+
+
+### Parameter and backbone setting
+For the enhancement of the tiny object detection, following python files and yaml file from YOLOv8 had been modified:
+1) User/ultralytics/cfg/models/v8/yolov8.yaml
+2) User/ultralytics/nn/tasks.py
+3) User/ultralytics/nn/modules/conv.py
+4) User/ultralytics/nn/modules/init.py
+5) User/ultralytics/utils/loss.py
+   
+Be careful, these directories are partially right up to the folder named ultralytics. The exact directories will vary based on the installation.
+Once the directories are sorted, such files should be replaced with the corresponding files in the repository in order to set the exact environment as this project.
+yolov8.yaml file updates the new backbone, (tasks.py, conv.py, init.py) updates the two new module called "conv_SEBlock" and "conv_CBAM" and finally loss.py updates new gamma value for focal loss function.
