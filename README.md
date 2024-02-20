@@ -11,9 +11,9 @@ Following approaches were taken for enhancement:
 
 ### Data Explanation
 For this project, DOTA-v2.0 had been used and few modifications were made before training.
-1) Unlike the original DOTA with 18 categories, it had been modified to have only 5 categories which are [large vehicles, small vehicles, ship, plane, storage tank]. The reason for such modification is to focus on the detection of tiny objects since not all 18 categories are considered to be tiny.
-2) DOTA form has been converted into appropriate form to be trained using YOLO and yaml file had been generated.
-3) Various augmentation techniques were implemented in order to increase the detection accuracy and performance.
+1) The original dataset, containing 18 categories, was streamlined to include only 5 targeted categories: large vehicles, small vehicles, ships, planes, and storage tanks. This refinement aimed to sharpen the focus on the detection of smaller objects, as the expansive range of categories in the original set included items not relevant to the project's scope.
+2) The dataset's format was transformed to be compatible with the YOLO framework, resulting in the creation of a corresponding YAML configuration file. 
+3) Various data augmentation techniques were applied to enhance detection accuracy and elevate the model's performance.
 
 ### YOLOv8 Installation
 ```bash
