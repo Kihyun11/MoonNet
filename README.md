@@ -7,11 +7,11 @@ Following approaches were taken for enhancement:
 1) Multi-scale feature learning
 2) Data augmentation
 3) Optimal training strategy - (gamma value modification for focal loss)
-4) Contex based strategy - (Implementation of [SE Block](https://github.com/hujie-frank/SENet?tab=readme-ov-file) and [CBAM](https://arxiv.org/abs/1807.06521)
+4) Contex based strategy - (Implementation of [SE Block](https://github.com/hujie-frank/SENet?tab=readme-ov-file) and [CBAM](https://arxiv.org/abs/1807.06521) in the backbone of YOLOv8 model)
 
 ### Data Explanation
 For this project, DOTA-v2.0 had been used and few modifications were made before training.
-1) Unlike the original DOTA with 18 categories, it had been modified to have only 5 categories which are [large vehicles, small vehicles, ship, plane, storage tank]. The reason for such     modification is to focus on the detection of tiny objects since not all 18 categories are considered to be tiny.
+1) Unlike the original DOTA with 18 categories, it had been modified to have only 5 categories which are [large vehicles, small vehicles, ship, plane, storage tank]. The reason for such modification is to focus on the detection of tiny objects since not all 18 categories are considered to be tiny.
 2) DOTA form has been converted into appropriate form to be trained using YOLO and yaml file had been generated.
 3) Various augmentation techniques were implemented in order to increase the detection accuracy and performance.
 
