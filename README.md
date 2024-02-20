@@ -3,6 +3,12 @@ Imperial College London MEng EIE Final Year Project
 ### About
 The objective of this project is to be able to enhance the detection of tiny objects in the [DOTA](https://captain-whu.github.io/DOTA/dataset.html)(Dataset for Object detection in Aerial images) using [YOLOv8](https://github.com/ultralytics/ultralytics) which is the latest version of the YOLO(You Only Look Once) model.
 
+Following approaches were taken for enhancement:
+1) Multi-scale feature learning
+2) Data augmentation
+3) Optimal training strategy - (gamma value modification for focal loss)
+4) Contex based strategy - (Implementation of [SE Block](https://github.com/hujie-frank/SENet?tab=readme-ov-file) and [CBAM](https://arxiv.org/abs/1807.06521)
+
 ### Data Explanation
 For this project, DOTA-v2.0 had been used and few modifications were made before training.
 1) Unlike the original DOTA with 18 categories, it had been modified to have only 5 categories which are [large vehicles, small vehicles, ship, plane, storage tank]. The reason for such     modification is to focus on the detection of tiny objects since not all 18 categories are considered to be tiny.
