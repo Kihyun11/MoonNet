@@ -25,10 +25,11 @@ Alternative installation step and more detailed information about the installati
 ### Parameter and backbone setting
 For the enhancement of the tiny object detection, following python files and yaml file from YOLOv8 had been modified:
 1) User/ultralytics/cfg/models/v8/yolov8.yaml
-2) User/ultralytics/nn/tasks.py
-3) User/ultralytics/nn/modules/conv.py
-4) User/ultralytics/nn/modules/init.py
-5) User/ultralytics/utils/loss.py
+2) User/ultralytics/cfg/default.yaml
+3) User/ultralytics/nn/tasks.py
+4) User/ultralytics/nn/modules/conv.py
+5) User/ultralytics/nn/modules/init.py
+6) User/ultralytics/utils/loss.py
    
 Be careful, these directories are partially right up to the folder named ultralytics. The exact directories will vary based on the installation.
 Once the directories are sorted, such files should be replaced with the corresponding files in the repository in order to set the exact environment as this project.
@@ -44,5 +45,28 @@ results = model.train(data=data_path, epochs=12, imgsz=867)
 Optimizer setting - In this project, the SGD optimizer is selected for the optimal training and thus used for the final training. Optimizer can be easily selected by editing the default.yaml file under ultralytics/cfg folders
 ```yaml
 optimizer: SGD # (str) optimizer to use, choices=[SGD, Adam, Adamax, AdamW, NAdam, RAdam, RMSProp, auto]
+```
+
+Gamma parameter setting for verifocal and focal loss - The default setting of gamma parameters for the verifocal loss and focal loss are 2.0 (verifocal) and 1.5 (focal). In this project these values are modifed to 5.0 and 4.5. Such modification can be made on the loss.py file under ultralytics/utils folders
+```python
+class VarifocalLoss(nn.Module):
+...
+
+    def __init__(self):
+        """Initialize the VarifocalLoss class."""
+        super().__init__()
+
+    @staticmethod
+    #default vale: alpha = 0.75, gamma = 2.0
+    def forward(pred_score, gt_score, label, alpha=0.75, gamma=5.0): #Gamma value modified to 5.0 for verifocal loss
+      ...
+        return loss
+
+class FocalLoss(nn.Module):
+...
+    #default vale: alpha = 0.25, gamma = 1.5
+    def forward(pred, label, gamma=4.5, alpha=0.25): # Gamma value modified to 4.5 for focal loss
+      ...
+        return loss.mean(1).sum()
 ```
 
