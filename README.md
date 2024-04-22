@@ -41,3 +41,8 @@ from ultralytics import YOLO
 results = model.train(data=data_path, epochs=12, imgsz=867)
 ```
 
+Optimizer setting - In this project, the SGD optimizer is selected for the optimal training and thus used for the final training. Optimizer can be easily selected by editing the default.yaml file under ultralytics/cfg folders
+```yaml
+optimizer: SGD # (str) optimizer to use, choices=[SGD, Adam, Adamax, AdamW, NAdam, RAdam, RMSProp, auto]
+```
+
