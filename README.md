@@ -17,9 +17,9 @@ For this project, DOTA-v2.0 had been used and few modifications were made before
 
 ### YOLOv8 Installation
 ```python
-pip install ultralytics
+pip install ultralytics=8.0.222
 ```
-Alternative installation step and more detailed information about the installation can be found here [YOLOv8](https://github.com/ultralytics/ultralytics)
+Alternative installation step and more detailed information about the installation can be found here [YOLOv8](https://github.com/ultralytics/ultralytics). It is beneficial to install ultralytics version 8.0.222 which is the exact environment of this project.
 
 
 ### Parameter and backbone setting
@@ -33,9 +33,9 @@ For the enhancement of the tiny object detection, following python files and yam
    
 Be careful, these directories are partially right up to the folder named ultralytics. The exact directories will vary based on the installation.
 Once the directories are sorted, such files should be replaced with the corresponding files in the repository in order to set the exact environment as this project.
-yolov8.yaml file updates the new backbone, (tasks.py, conv.py, init.py) updates the two new module called "conv_SEBlock" and "conv_CBAM" and finally loss.py updates new gamma value for focal loss function.
+yolov8.yaml file updates the new backbone, (tasks.py, conv.py, init.py) updates the two new module called "conv_SEBlock" and "conv_CBAM" and finally loss.py updates new gamma value for focal loss function. If you installed different version of ultralytics other than 8.0.222, you need to manually modify the above files in order to set the exact environment. This is manually guided in the next sections, however, manual changes might not work for the latest version. In that case make sure you install the version 8.0.222.
 
-### 1) Hyper parameter tuning
+### 1) Hyper parameter tuning (Manual setting)
 Image size setting - In this project, image size of 867 was selected for the optimal training and thus imgsz parameter is set to 867
 ```python
 from ultralytics import YOLO
