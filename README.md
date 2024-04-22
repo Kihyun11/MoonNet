@@ -16,7 +16,7 @@ For this project, DOTA-v2.0 had been used and few modifications were made before
 3) Various data augmentation techniques were applied to enhance detection accuracy and elevate the model's performance.
 
 ### YOLOv8 Installation
-```bash
+```python
 pip install ultralytics
 ```
 Alternative installation step and more detailed information about the installation can be found here [YOLOv8](https://github.com/ultralytics/ultralytics)
@@ -34,7 +34,7 @@ Be careful, these directories are partially right up to the folder named ultraly
 Once the directories are sorted, such files should be replaced with the corresponding files in the repository in order to set the exact environment as this project.
 yolov8.yaml file updates the new backbone, (tasks.py, conv.py, init.py) updates the two new module called "conv_SEBlock" and "conv_CBAM" and finally loss.py updates new gamma value for focal loss function.
 
-###1) Hyper parameter tuning
+### 1) Hyper parameter tuning
 Image size setting - In this project, image size of 867 was selected for the optimal training and thus imgsz parameter is set to 867
 ```bash
 results = model.train(data=data_path, epochs=12, imgsz=867)
