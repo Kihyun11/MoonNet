@@ -36,7 +36,8 @@ yolov8.yaml file updates the new backbone, (tasks.py, conv.py, init.py) updates 
 
 ### 1) Hyper parameter tuning
 Image size setting - In this project, image size of 867 was selected for the optimal training and thus imgsz parameter is set to 867
-```bash
+```python
+from ultralytics import YOLO
 results = model.train(data=data_path, epochs=12, imgsz=867)
 ```
 
