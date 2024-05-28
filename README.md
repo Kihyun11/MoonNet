@@ -7,7 +7,7 @@ Following approaches were taken for enhancement:
 1) Hyper parameter tuning for optimal training - (gamma value modification for focal loss, optimizer selection and varying resolution)
 2) Data augmentation
 3) Multi-scale feature learning
-4) Contex based strategy - (Implementation of [SE Block](https://github.com/hujie-frank/SENet?tab=readme-ov-file) and [CBAM](https://arxiv.org/abs/1807.06521) in the backbone of YOLOv8 model)
+4) Attnetion mechanism - (Implementation of [SE Block](https://github.com/hujie-frank/SENet?tab=readme-ov-file) and [CBAM](https://arxiv.org/abs/1807.06521) in the backbone of YOLOv8 model)
 
 ### Data Explanation
 For this project, DOTA-v2.0 had been used and few modifications were made before training.
@@ -72,6 +72,30 @@ class FocalLoss(nn.Module):
 
 ###2) Data Augmentation
 In this project, data augmentation version 2 is selected for the final training. More various data augmentation techniques can be implemented on the data augmentation version 1 which is the data pack with no augmentation.
+When using the dataset, we have to specify the directory for the data.yaml file in the dataset. In the uploaded dataset files, data.yaml file exists for the each dataset file.
+
+First, we need to modify this data.yaml file. We need to specify the directories for the training set, validation set and the test set.
+
+```yaml
+names:
+- large-vehicle
+- plane
+- ship
+- small-vehicle
+- storage-tank
+nc: 5
+roboflow:
+...
+test: Users/test/images # This is your directory for the test set
+train: Users/train/images # This is your directory for the train set
+val: Users/valid/images # This is your directory for the validation set
+```
+Once this data.yaml file is correctly modified. We can use this dataset in the training.
+We can specify the directory of this modified yaml file before training.
+
+```python
+results = model.train(data='Users/data.yaml', epochs=12, imgsz=928) # You need to specify your directory for data.yaml file here
+```
 
 ###3) Multi scale feature learning and Attention Mechanism (Manual setting)
 For the multi scale feature learning strategy used in this project, dilated layers with dilation factor 2 and 3 are used. Thus, when manually setting the model, two dilated layers need to be added.
@@ -313,5 +337,35 @@ This is the end of modification for tasks.py file.
 
 Now, we can use the newly added classes in the backbone via yaml file.
 
+The backbone yaml file can be found under ultralytics/cfg/models/v8/yolov8.yaml.
+If we want to implement Conv_CBAM in the second layer following modifications can update the backbone of the model.
+
+```yaml
+# YOLOv8.0n backbone
+backbone:
+  # [from, repeats, module, args]
+  - [-1, 1, Conv, [64, 3, 2]] # 0-P1/2
+  - [-1, 1, Conv_CBAM, [128, 3, 2]] # 1-P2/4
+  - [-1, 3, C2f, [128, True]]
+  - [-1, 1, Conv, [256, 3, 2]] # 3-P3/8
+  - [-1, 6, C2f, [256, True]]
+  - [-1, 1, Conv, [512, 3, 2]] # 5-P4/16
+  - [-1, 6, C2f, [512, True]]
+  - [-1, 1, Conv, [1024, 3, 2]] # 7-P5/32
+  - [-1, 3, C2f, [1024, True]]
+  - [-1, 1, SPPF, [1024, 5]] # 9
+```
+If you want to start training using the customized backbone, the directory of the backbone yaml file need to be specified when begin the training.
+
+```python
+from ultralytics import YOLO
+model_path = 'Users/customized_backbone.yaml' # This is your directorcy
+model = YOLO(model_path)
+#model = YOLO(model_path).load('yolov8n.pt')  # build from YAML and transfer weights
+
+results = model.train(data='Users/data.yaml', epochs=12, imgsz=928)
+```
+
+Clear explanations and guide lines for the training using python code are availabe via 'YOLOV8.ipynb' file in the repository.
 
 
