@@ -4,7 +4,7 @@ Imperial College London MEng EIE Final Year Project
 The objective of this project is to be able to enhance the detection of tiny objects in the [DOTA](https://captain-whu.github.io/DOTA/dataset.html)(Dataset for Object detection in Aerial images) using [YOLOv8](https://github.com/ultralytics/ultralytics) which is the latest version of the YOLO(You Only Look Once) model.
 
 Following approaches were taken for enhancement:
-1) Hyper parameter tuning for optimal training - (gamma value modification for focal loss, optimizer selection and varying resolution)
+1) Hyper parameter tuning for optimal training - (focusing parameter value modification for focal loss, optimizer selection and varying resolution)
 2) Data augmentation
 3) Multi-scale feature learning
 4) Attnetion mechanism - (Implementation of [SE Block](https://github.com/hujie-frank/SENet?tab=readme-ov-file) and [CBAM](https://arxiv.org/abs/1807.06521) in the backbone of YOLOv8 model)
@@ -47,7 +47,7 @@ Optimizer setting - In this project, the SGD optimizer is selected for the optim
 optimizer: SGD # (str) optimizer to use, choices=[SGD, Adam, Adamax, AdamW, NAdam, RAdam, RMSProp, auto]
 ```
 
-Gamma parameter setting for verifocal and focal loss - The default setting of gamma parameters for the verifocal loss and focal loss are 2.0 (verifocal) and 1.5 (focal). In this project these values are modifed to 5.0 and 4.5. Such modification can be made on the loss.py file under ultralytics/utils folders
+Focusing parameter (Gamma) value setting for verifocal and focal loss - The default setting of focusing parameter values for the verifocal loss and focal loss are 2.0 (verifocal) and 1.5 (focal). In this project these values are modifed to 5.0 and 4.5. Such modification can be made on the loss.py file under ultralytics/utils folders
 ```python
 class VarifocalLoss(nn.Module):
 ...
@@ -70,7 +70,7 @@ class FocalLoss(nn.Module):
         return loss.mean(1).sum()
 ```
 
-###2) Data Augmentation
+### 2) Data Augmentation
 In this project, data augmentation version 2 is selected for the final training. More various data augmentation techniques can be implemented on the data augmentation version 1 which is the data pack with no augmentation.
 When using the dataset, we have to specify the directory for the data.yaml file in the dataset. In the uploaded dataset files, data.yaml file exists for the each dataset file.
 
@@ -97,7 +97,7 @@ We can specify the directory of this modified yaml file before training.
 results = model.train(data='Users/data.yaml', epochs=12, imgsz=928) # You need to specify your directory for data.yaml file here
 ```
 
-###3) Multi scale feature learning and Attention Mechanism (Manual setting)
+### 3) Multi scale feature learning and Attention Mechanism (Manual setting)
 For the multi scale feature learning strategy used in this project, dilated layers with dilation factor 2 and 3 are used. Thus, when manually setting the model, two dilated layers need to be added.
 
 The first step is adding two classes 'Dilated_Conv' and 'Dilated_Conv_d3' in conv.py file under ultralytics/nn/modules folders.
@@ -366,6 +366,9 @@ model = YOLO(model_path)
 results = model.train(data='Users/data.yaml', epochs=12, imgsz=928)
 ```
 
-Clear explanations and guide lines for the training using python code are availabe via 'YOLOV8.ipynb' file in the repository.
+### Training and Testing
+
+Once the setting is done, training and testing can be made.
+Clear explanations and guide lines for the training using python code are availabe via 'YOLOv8_test.ipynb' file in the repository.
 
 
