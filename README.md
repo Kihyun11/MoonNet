@@ -371,4 +371,8 @@ results = model.train(data='Users/data.yaml', epochs=12, imgsz=928)
 Once the setting is done, training and testing can be made.
 Clear explanations and guide lines for the training using python code are availabe via 'YOLOv8_test.ipynb' file in the repository.
 
+### Results
+
+All the results obtained from this project is stored under the foler called 'results'. The results for different focusing parameter values for the focal loss are stored in the folder called gamma values.
+
 
