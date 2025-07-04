@@ -1,4 +1,4 @@
-# Enhanced-Detection-of-Tiny-Objects-Using-Machine-Learning-Algorithm
+# Mixture of Orthogonal Neural-modules Network: Enhanced-Detection-of-Tiny-Objects-Using-Machine-Learning-Algorithm
 Imperial College London MEng EIE Final Year Project
 ### About
 The objective of this project is to be able to enhance the detection of tiny objects in the [DOTA](https://captain-whu.github.io/DOTA/dataset.html)(Dataset for Object detection in Aerial images) using [YOLOv8](https://github.com/ultralytics/ultralytics) which is the latest version of the YOLO(You Only Look Once) model.
