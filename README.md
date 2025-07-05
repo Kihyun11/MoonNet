@@ -19,7 +19,7 @@ For this project, DOTA-v2.0 had been used and few modifications were made before
 ```python
 pip install ultralytics==8.3.162
 ```
-Alternative installation step and more detailed information about the installation can be found here [YOLOv8](https://github.com/ultralytics/ultralytics). It is beneficial to install ultralytics version 8.0.222 which is the exact environment of this project.
+Alternative installation step and more detailed information about the installation can be found here [YOLOv8](https://github.com/ultralytics/ultralytics). It is beneficial to install ultralytics version 8.3.162 which is the exact environment of this project.
 
 
 ### Parameter and backbone setting
