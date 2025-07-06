@@ -21,7 +21,24 @@ pip install ultralytics==8.3.162
 ```
 Alternative installation step and more detailed information about the installation can be found here [YOLOv8](https://github.com/ultralytics/ultralytics). It is beneficial to install ultralytics version 8.3.162 which is the exact environment of this project.
 
+### Python Library Installation
+Following python libraries are required before starting the training
+```python
+pip install opencv-python
+```
+```python
+pip install pip install matplotlib
+```
+```python
+pip install pandas
+```
+```python
+pip install scipy
 
+```python
+pip install tqdm
+```
+```
 ### Parameter and backbone setting
 For the enhancement of the tiny object detection, following python files and yaml file from YOLOv8 had been modified:
 1) User/ultralytics/cfg/models/v8/yolov8.yaml
