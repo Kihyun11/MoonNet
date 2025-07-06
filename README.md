@@ -34,11 +34,11 @@ pip install pandas
 ```
 ```python
 pip install scipy
-
+```
 ```python
 pip install tqdm
 ```
-```
+
 ### Parameter and backbone setting
 For the enhancement of the tiny object detection, following python files and yaml file from YOLOv8 had been modified:
 1) User/ultralytics/cfg/models/v8/yolov8.yaml
