@@ -27,7 +27,7 @@ Following python libraries are required before starting the training
 pip install opencv-python
 ```
 ```python
-pip install pip install matplotlib
+pip install matplotlib
 ```
 ```python
 pip install pandas
