@@ -38,6 +38,9 @@ pip install scipy
 ```python
 pip install tqdm
 ```
+```python
+pip install opencv-python==4.8.1.78
+```
 
 ### Parameter and backbone setting
 For the enhancement of the tiny object detection, following python files and yaml file from YOLOv8 had been modified:
