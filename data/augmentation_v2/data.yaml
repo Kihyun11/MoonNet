@@ -11,6 +11,6 @@ roboflow:
   url: https://universe.roboflow.com/fyp-hodho/fyp_yolov8/dataset/2
   version: 2
   workspace: fyp-hodho
-test: C:/Users/yoo07/OneDrive/바탕 화면/DOTA_V1/FYP_YOLOV8-2/test/images
-train: C:/Users/yoo07/OneDrive/바탕 화면/DOTA_V1/FYP_YOLOV8-2/train/images
-val: C:/Users/yoo07/OneDrive/바탕 화면/DOTA_V1/FYP_YOLOV8-2/valid/images
+test: dataset/path
+train: dataset/path
+val: dataset/path

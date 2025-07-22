@@ -1,9 +1,8 @@
 path: ../datasets/roboflow
 
-train: C:/Users/yoo07/OneDrive/바탕 화면/DOTA_V1/FYP_YOLOV8.v6-fyp_w_bbox.yolov8-obb/train/images
-val: C:/Users/yoo07/OneDrive/바탕 화면/DOTA_V1/FYP_YOLOV8.v6-fyp_w_bbox.yolov8-obb/valid/images
-test: C:/Users/yoo07/OneDrive/바탕 화면/DOTA_V1/FYP_YOLOV8.v6-fyp_w_bbox.yolov8-obb/test/images
-
+train: dataset/path
+val: dataset/path
+test: dataset/path
 names: 
   0: large-vehicle
   1: plane

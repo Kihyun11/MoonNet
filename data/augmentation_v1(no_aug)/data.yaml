@@ -1,0 +1,13 @@
+train: dataset/path
+val: dataset/path
+test: dataset/path
+
+nc: 5
+names: ['large-vehicle', 'plane', 'ship', 'small-vehicle', 'storage-tank']
+
+roboflow:
+  workspace: fyp-hodho
+  project: fyp_yolov8
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/fyp-hodho/fyp_yolov8/dataset/1
