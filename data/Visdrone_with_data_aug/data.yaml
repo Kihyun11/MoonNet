@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 11
+names: ['awning-tricycle', 'bicycle', 'bus', 'car', 'motor', 'others', 'pedestrian', 'people', 'tricycle', 'truck', 'van']
+
+roboflow:
+  workspace: tod-jcemc
+  project: visdrone-xrkcv
+  version: 3
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/tod-jcemc/visdrone-xrkcv/dataset/3
