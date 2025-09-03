@@ -1,0 +1,18 @@
+# data.yaml for VisDrone YOLOv8 training
+train: images/train
+val: images/val
+test: images/test-dev  
+
+nc: 11
+names: 
+  - pedestrian
+  - people
+  - bicycle
+  - car
+  - van
+  - truck
+  - tricycle
+  - awning-tricycle
+  - bus
+  - motor
+  - others
