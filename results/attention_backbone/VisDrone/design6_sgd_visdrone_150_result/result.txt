@@ -1,0 +1,17 @@
+Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 35/35 [00:15<00:00,  2.21it/s]
+                   all        548      40137      0.453      0.352      0.358      0.214
+            pedestrian        340       1378      0.214     0.0288     0.0327    0.00845
+                people        520       8844      0.492      0.396      0.412      0.189
+               bicycle        482       5125      0.544      0.273      0.327      0.125
+                   car        364       1287      0.228      0.176      0.124     0.0502
+                   van        515      14064      0.722      0.768      0.797       0.57
+                 truck        421       1975      0.499      0.452      0.449      0.316
+              tricycle        266        750      0.459      0.373      0.366      0.247
+       awning-tricycle        337       1045      0.415      0.293      0.273      0.148
+                   bus        220        532      0.303      0.173      0.163      0.107
+                 motor        131        251      0.607      0.494       0.56      0.393
+                others        485       4886      0.498       0.45      0.438      0.196
+Speed: 0.1ms preprocess, 17.2ms inference, 0.0ms loss, 5.8ms postprocess per image
+Saving /workspace/MoonNet/runs/detect/val4/predictions.json...
+Results saved to /workspace/MoonNet/runs/detect/val4
+{'metrics/precision(B)': 0.4526557591977678, 'metrics/recall(B)': 0.3524032364614531, 'metrics/mAP50(B)': 0.35833992858884167, 'metrics/mAP50-95(B)': 0.21356194745327592, 'fitness': 0.22803974556683249}

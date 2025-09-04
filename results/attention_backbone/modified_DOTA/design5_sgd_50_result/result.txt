@@ -1,0 +1,11 @@
+Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 11/11 [00:24<00:00,  2.20s/it]
+                   all        165      25458      0.687      0.301      0.344       0.18
+         large-vehicle         65       2419      0.566      0.576      0.568      0.366
+                 plane         32        844      0.741      0.461      0.513      0.259
+                  ship         51       4688      0.758      0.288      0.364      0.151
+         small-vehicle        118      17275      0.637      0.093      0.148     0.0665
+          storage-tank         30        232      0.735     0.0862      0.127     0.0568
+Speed: 0.2ms preprocess, 70.3ms inference, 0.0ms loss, 33.8ms postprocess per image
+Saving /workspace/MoonNet/runs/detect/val2/predictions.json...
+Results saved to /workspace/MoonNet/runs/detect/val2
+{'metrics/precision(B)': 0.6874834178756016, 'metrics/recall(B)': 0.30067215257327656, 'metrics/mAP50(B)': 0.34396930705588685, 'metrics/mAP50-95(B)': 0.17977256543532275, 'fitness': 0.19619223959737916}
