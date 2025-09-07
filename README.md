@@ -3,7 +3,7 @@ Enhanced Detection of Tiny Objects in Aerial Images
 
 ## Dataset
 <p align="center">
-  <img src="figures/DOTA_modification.png" alt="dota_modification" width="500" height = "350px"/>
+  <img src="figures/DOTA_modification.png" alt="dota_modification" width="350" height = "350px"/>
   <br>
   <em>Modified DOTAv2.0</em>
 </p>
@@ -21,3 +21,27 @@ Enhanced Detection of Tiny Objects in Aerial Images
   <br>
   <em>MoonNet backbone design</em>
 </p>
+
+## Training
+Training using pretrained model
+```python
+tools/python screening_train.py
+```
+Training using attention-augmented backbone (training from scratch)
+```python
+tools/python custom_backbones_train.py
+```
+
+## Evaluating
+Evaluating using modified DOTA
+```python
+tools/python eval.py
+```
+Evaluating using VisDrone
+```python
+tools/python eval_visdrone.py
+```
+Visual predictions
+```python
+tools/python vis_YOLOv8.py
+```
