@@ -77,6 +77,8 @@ from .conv import (
     SpatialAttention,
     Conv_SEBlock,
     Conv_CBAM,
+    Conv_SEBlock_custom,
+    Conv_CBAM_custom,
 )
 from .head import (
     OBB,

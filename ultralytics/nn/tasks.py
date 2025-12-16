@@ -70,6 +70,8 @@ from ultralytics.nn.modules import (
     v10Detect,
     Conv_SEBlock,
     Conv_CBAM,
+    Conv_SEBlock_custom,
+    Conv_CBAM_custom,
 )
 from ultralytics.utils import DEFAULT_CFG_DICT, DEFAULT_CFG_KEYS, LOGGER, YAML, colorstr, emojis
 from ultralytics.utils.checks import check_requirements, check_suffix, check_yaml
@@ -1646,6 +1648,8 @@ def parse_model(d, ch, verbose=True):
             A2C2f,
             Conv_SEBlock,
             Conv_CBAM,
+            Conv_SEBlock_custom,
+            Conv_CBAM_custom,
         }
     )
     repeat_modules = frozenset(  # modules with 'repeat' arguments

@@ -27,6 +27,8 @@ __all__ = (
     "Index",
     "Conv_SEBlock",
     "Conv_CBAM",
+    "Conv_SEBlock_custom"
+    "Conv_CBAM_custom"
 )
 
 
@@ -730,11 +732,25 @@ class Conv_SEBlock(nn.Module):
         self.act = self.default_act if act is True else act if isinstance(act, nn.Module) else nn.Identity()
         
         #--------------------------------------------------------------------
-        # Squeeze-and-Excitation layers
+        # Squeeze-and-Excitation layers - original gating mechanism
         self.se_squeeze = nn.AdaptiveAvgPool2d(1)
         self.se_fc1 = nn.Conv2d(c2, c2 // 16, 1)
         self.se_fc2 = nn.Conv2d(c2 // 16, c2, 1)
-        self.se_act = nn.Sigmoid()
+        self.se_act = nn.Sigmoid() # original sigmoid()
+        #--------------------------------------------------------------------
+
+        #--------------------------------------------------------------------
+        # Squeeze-and-Excitation layers - custom gating mechanism
+        # hidden = max(min_hidden, c2 // max(1, reduction))
+        # self.se_squeeze = nn.AdaptiveAvgPool2d(1)
+        # self.se_fc1 = nn.Conv2d(c2, hidden, 1, bias=True)
+        # self.se_fc2 = nn.Conv2d(hidden, c2, 1, bias=True)
+        # self.se_act_custom = nn.Tanh()
+
+        # # identity-safe init: gate = 1 at step 0
+        # nn.init.zeros_(self.se_fc2.weight)
+        # nn.init.zeros_(self.se_fc2.bias)
+    
         #--------------------------------------------------------------------
         
     def forward(self, x):
@@ -747,7 +763,8 @@ class Conv_SEBlock(nn.Module):
         y = self.se_fc1(y)
         y = F.relu(y, inplace=True)
         y = self.se_fc2(y)
-        y = self.se_act(y)
+        y = self.se_act(y) # original sigmoid gating
+        #y = 1.0 + self.se_act_custom(y) # custom tanh gating mechanism
         x = x * y
         return x
 
@@ -762,10 +779,48 @@ class Conv_SEBlock(nn.Module):
         y = self.se_fc1(y)
         y = F.relu(y, inplace=True)
         y = self.se_fc2(y)
-        y = self.se_act(y)
+        y = self.se_act(y) # original sigmoid gating
+        #y = 1.0 + self.se_act_custom(y) # custom tanh gating mechanism
         x = x * y
         #-------------------------------------
         return x
+    
+class Conv_SEBlock_custom(nn.Module):
+    default_act = nn.SiLU()
+
+    def __init__(self, c1, c2, k=1, s=1, p=None, g=1, d=1, act=True, reduction=16, min_hidden=8):
+        super().__init__()
+        self.conv = nn.Conv2d(c1, c2, k, s, autopad(k, p, d), groups=g, dilation=d, bias=False)
+        self.bn   = nn.BatchNorm2d(c2)
+        self.act  = self.default_act if act is True else act if isinstance(act, nn.Module) else nn.Identity()
+
+        # ---- SE ----
+        hidden = max(min_hidden, c2 // max(1, reduction))
+        self.se_squeeze = nn.AdaptiveAvgPool2d(1)
+        self.se_fc1 = nn.Conv2d(c2, hidden, 1, bias=True)
+        self.se_fc2 = nn.Conv2d(hidden, c2, 1, bias=True)
+        self.se_act_custom = nn.Tanh()
+
+        # identity-safe init: gate = 1 at step 0
+        nn.init.zeros_(self.se_fc2.weight)
+        nn.init.zeros_(self.se_fc2.bias)
+
+    def forward(self, x):
+        x = self.act(self.bn(self.conv(x)))
+        y = self.se_squeeze(x)
+        y = F.relu(self.se_fc1(y), inplace=True)
+        y = self.se_fc2(y)
+        y = 1.0 + self.se_act_custom(y)   # residual, zero-centered
+        return x * y
+
+    def forward_fuse(self, x):
+        """Use only after external Conv+BN fusion."""
+        x = self.act(self.conv(x))
+        y = self.se_squeeze(x)
+        y = F.relu(self.se_fc1(y), inplace=True)
+        y = self.se_fc2(y)
+        y = 1.0 + self.se_act_custom(y)
+        return x * y
     
 
 class Conv_CBAM(nn.Module):
@@ -798,6 +853,52 @@ class Conv_CBAM(nn.Module):
         if p is None:  # pad to 'same'
             p = (k - 1) // 2 * d
         return p
+    
+
+class Conv_CBAM_custom(nn.Module):
+    """Conv + BN + Act + CBAM (channel then spatial) with residual 1 + tanh gating."""
+    default_act = nn.SiLU()
+
+    def __init__(self, c1, c2, k=1, s=1, p=None, g=1, d=1, act=True,
+                 reduction=16, min_hidden=8, spatial_kernel=7):
+        super().__init__()
+        # stem
+        self.conv = nn.Conv2d(c1, c2, k, s, autopad(k, p, d), groups=g, dilation=d, bias=False)
+        self.bn   = nn.BatchNorm2d(c2)
+        self.act  = self.default_act if act is True else act if isinstance(act, nn.Module) else nn.Identity()
+
+        # ----- Channel attention (identity-safe) -----
+        h = max(min_hidden, c2 // max(1, reduction))
+        self.ca_avg = nn.AdaptiveAvgPool2d(1)
+        self.ca_max = nn.AdaptiveMaxPool2d(1)
+        self.ca_fc1 = nn.Conv2d(c2, h, 1, bias=True)
+        self.ca_fc2 = nn.Conv2d(h, c2, 1, bias=True)
+        # zero-init last proj -> tanh(0)=0 -> gate==1 at init
+        nn.init.zeros_(self.ca_fc2.weight)
+        nn.init.zeros_(self.ca_fc2.bias)
+
+        # ----- Spatial attention (identity-safe) -----
+        ksp = int(spatial_kernel)
+        self.sa = nn.Conv2d(2, 1, ksp, padding=ksp // 2, bias=True)
+        nn.init.zeros_(self.sa.weight)
+        nn.init.zeros_(self.sa.bias)
+
+    def forward(self, x):
+        # stem
+        x = self.act(self.bn(self.conv(x)))
+
+        # Channel gate: x <- x * (1 + tanh(MLP(avg+max)))
+        ca = self.ca_avg(x) + self.ca_max(x)
+        ca = F.relu(self.ca_fc1(ca), inplace=True)
+        ca = torch.tanh(self.ca_fc2(ca))
+        x  = x * (1.0 + ca)
+
+        # Spatial gate: x <- x * (1 + tanh(conv([avg, max])))
+        avg = x.mean(1, keepdim=True)
+        mx, _ = x.max(1, keepdim=True)
+        sa = torch.tanh(self.sa(torch.cat([avg, mx], dim=1)))
+        x  = x * (1.0 + sa)
+        return x
 
 
 
