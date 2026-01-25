@@ -44,7 +44,7 @@ DOTAv2.0(Original)/
 ```
 Then run this python code
 ```python
-python dota2COCO.py \
+python dota2YOLO.py \
 --dota_root /path/to/DOTA-v2.0(Original) \
 --out /path/to/modified_dota_v2(Output) \
 #for HBB extraction,
