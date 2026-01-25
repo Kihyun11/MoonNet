@@ -22,6 +22,37 @@ Enhanced Detection of Tiny Objects in Aerial Images
   <em>MoonNet backbone design</em>
 </p>
 
+## Dataset Preparation
+Download and prepare the original DOTAv2.0 dataset same as the below folder hierarchy and also create the output folder where the modified dataset will be stored.
+```
+DOTAv2.0(Original)/
+├── train/
+│ ├── images/
+│ | ├── P0000.png
+| | | ...
+│ └── labels/
+│ | ├── P0000.txt 
+| | | ...
+|
+└── val/
+│ ├── images/
+│ | ├── P0003.png
+| | | ...
+│ └── labels/
+│ | ├── P0003.txt 
+| | | ...
+```
+Then run this python code
+```python
+python dota2COCO.py \
+--dota_root /path/to/DOTA-v2.0(Original) \
+--out /path/to/modified_dota_v2(Output) \
+#for HBB extraction,
+--export_coco
+#for OBB extraction,
+--obb
+```
+
 ## Training
 Training using pretrained model
 ```python
