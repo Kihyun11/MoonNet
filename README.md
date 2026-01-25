@@ -52,6 +52,15 @@ python dota2COCO.py \
 #for OBB extraction,
 --obb
 ```
+If you want to check the pixel size of each object categories after modification, you run check the average sizes by running this code
+```python
+python avg_pixel_size.py \
+--root "root_to_your_file" \
+#for training set
+--split train
+#for validation set
+--split val
+```
 
 ## Training
 Training using pretrained model
