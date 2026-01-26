@@ -23,6 +23,8 @@ Enhanced Detection of Tiny Objects in Aerial Images
 </p>
 
 ## Dataset Preparation
+
+### DOTA
 Download and prepare the original DOTAv2.0 dataset same as the below folder hierarchy and also create the output folder where the modified dataset will be stored.
 ```
 DOTAv2.0(Original)/
@@ -60,6 +62,38 @@ python avg_pixel_size.py \
 --split train
 #for validation set
 --split val
+```
+
+### VisDrone
+Download and prepare the original VisDrone2019 dataset same as the below folder hierarchy and also create the output folder where the modified dataset will be stored.
+```
+VisDrone2019(Original)/
+├── VisDrone2019-DET-train/
+│ ├── images/
+│ | ├── 0000002_00005_d_0000014.jpg
+| | | ...
+│ └── annotations/
+│ | ├── 0000002_00005_d_0000014.txt 
+| | | ...
+|
+└── VisDrone2019-DET-val/
+│ ├── images/
+│ | ├── 0000001_02999_d_0000005.jpg
+| | | ...
+│ └── annotations/
+│ | ├── 0000001_02999_d_0000005.txt 
+| | | ...
+```
+
+Then run this python code
+```python
+python dota2YOLO.py \
+--dota_root /path/to/DOTA-v2.0(Original) \
+--out /path/to/modified_dota_v2(Output) \
+#for HBB extraction,
+--export_coco
+#for OBB extraction,
+--obb
 ```
 
 ## Training
