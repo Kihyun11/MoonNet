@@ -106,6 +106,16 @@ Training using attention-augmented backbone (training from scratch)
 tools/python custom_backbones_train.py
 ```
 
+To conduct a training using the modified DOTAv2.0, run this command
+```python
+yolo obb train cfg='direction/to/your/config.yaml'
+```
+
+To conduct a training using the VisDrone2019, run this command
+```python
+yolo detect train cfg='direction/to/your/config.yaml'
+```
+
 ## Evaluating
 Evaluating using modified DOTA
 ```python
