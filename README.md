@@ -87,13 +87,10 @@ VisDrone2019(Original)/
 
 Then run this python code
 ```python
-python dota2YOLO.py \
---dota_root /path/to/DOTA-v2.0(Original) \
---out /path/to/modified_dota_v2(Output) \
-#for HBB extraction,
---export_coco
-#for OBB extraction,
---obb
+python VisDrone2YOLO_HBB.py \
+--dota_root /path/to/VisDrone2019(Original) \
+--out /path/to/VisDrone2YOLO(Output) \
+--split train val
 ```
 
 ## Training
