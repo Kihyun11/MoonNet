@@ -10,7 +10,7 @@ Enhanced Detection of Tiny Objects in Aerial Images
 
 ## Backbone Designs
 <p align="center">
-  <img src="figures/backbone_design.png" alt="backbone_design" width="400" height = "350px"/>
+  <img src="figures/backbone_designs.png" alt="backbone_design" width="400" height = "350px"/>
   <br>
   <em>Six attention-augmented backbone designs</em>
 </p>
