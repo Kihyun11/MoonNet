@@ -15,14 +15,19 @@ scales: # model compound scaling constants, i.e. 'model=yolov8n.yaml' will call 
   x: [1.00, 1.25, 512] # YOLOv8x summary: 209 layers, 68229648 parameters, 68229632 gradients, 258.5 GFLOPS
 
 # YOLOv8.0n backbone
+
+#If you want to switch the gating function of the attention modules from
+#Sigmoid() -> (1+tanh()) you can replace the current [Conv_SEBlock] and [Conv_CBAM] to
+# [Conv_SEBlock_custom] and [Conv_CBAM_custom]
+
 backbone:
   # [from, repeats, module, args]
-  - [-1, 1, Conv_CBAM, [64, 3, 2]] # 0-P1/2
+  - [-1, 1, Conv_SEBlock, [64, 3, 2]] # 0-P1/2
   - [-1, 1, Conv_SEBlock, [128, 3, 2]] # 1-P2/4
   - [-1, 3, C2f, [128, True]]
-  - [-1, 1, Conv_CBAM, [256, 3, 2]] # 3-P3/8
+  - [-1, 1, Conv_SEBlock, [256, 3, 2]] # 3-P3/8
   - [-1, 6, C2f, [256, True]]
-  - [-1, 1, Conv_SEBlock, [512, 3, 2]] # 5-P4/16
+  - [-1, 1, Conv_CBAM, [512, 3, 2]] # 5-P4/16
   - [-1, 6, C2f, [512, True]]
   - [-1, 1, Conv_CBAM, [1024, 3, 2]] # 7-P5/32
   - [-1, 3, C2f, [1024, True]]
@@ -46,4 +51,4 @@ head:
   - [[-1, 9], 1, Concat, [1]] # cat head P5
   - [-1, 3, C2f, [1024]] # 21 (P5/32-large)
 
-  - [[15, 18, 21], 1, Detect, [nc]] # Detect(P3, P4, P5)
+  - [[15, 18, 21], 1, OBB, [nc, 1]] # Detect(P3, P4, P5)

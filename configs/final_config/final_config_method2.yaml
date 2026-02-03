@@ -1,0 +1,43 @@
+# train_aug_obb.yaml — Ultralytics YOLOv8-OBB
+mode: train
+task: obb
+
+data: path/to/your/modified-DOTA/data.yaml
+model: path/to/your/yolov8-obb(default)_backbone.yaml
+pretrained: false
+
+epochs: 150
+imgsz: 928
+batch: 4
+device: 0
+patience: 0
+
+optimizer: AdamW
+lr0: 0.01
+lrf: 0.01
+momentum: 0.937
+weight_decay: 0.0005
+
+# Augmentation (default)
+hsv_h: 0.0
+hsv_s: 0.0
+hsv_v: 0.0
+degrees: 0
+translate: 0.0
+scale: 0.0
+shear: 0
+perspective: 0.0
+flipud: 0
+fliplr: 0.0
+bgr: 0.0
+mosaic: 0.0
+mixup: 0.0
+
+auto_augment: null
+erasing: 0.0
+
+close_mosaic: 0
+
+save: true
+project: runs/train/final_config
+name: final_config_method2
