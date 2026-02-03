@@ -94,15 +94,6 @@ python VisDrone2YOLO_HBB.py \
 ```
 
 ## Training
-Training using pretrained model
-```python
-tools/python screening_train.py
-```
-Training using attention-augmented backbone (training from scratch)
-```python
-tools/python custom_backbones_train.py
-```
-
 To conduct a training using the modified DOTAv2.0, run this command
 ```python
 yolo obb train cfg='direction/to/your/config.yaml'
